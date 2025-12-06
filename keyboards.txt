@@ -1,0 +1,162 @@
+"""
+لوحات المفاتيح - إنشاء الأزرار والقوائم
+"""
+
+from telebot import types
+
+def main_menu_keyboard():
+    """القائمة الرئيسية"""
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+    
+    buttons = [
+        '🚖 طلب رحلة',
+        '📍 إرسال موقعي',
+        '💰 رصيدي',
+        '📋 رحلاتي',
+        '⚙️ إعدادات',
+        '📞 الدعم',
+        '👤 حسابي',
+        '🎫 العروض'
+    ]
+    
+    for i in range(0, len(buttons), 2):
+        if i+1 < len(buttons):
+            markup.row(buttons[i], buttons[i+1])
+        else:
+            markup.row(buttons[i])
+    
+    return markup
+
+def driver_menu_keyboard():
+    """قائمة السائق"""
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+    
+    markup.row('🟢 بدء العمل', '🔴 إيقاف')
+    markup.row('📍 تحديث موقعي', '📊 الطلبات')
+    markup.row('💰 أرباحي', '📈 إحصائيات')
+    markup.row('🏠 القائمة الرئيسية')
+    
+    return markup
+
+def role_selection_keyboard():
+    """اختيار الدور"""
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+    markup.row('👤 عميل', '🚖 سائق')
+    return markup
+
+def ride_types_inline():
+    """أنواع الرحلات (أزرار داخلية)"""
+    markup = types.InlineKeyboardMarkup(row_width=2)
+    
+    markup.add(
+        types.InlineKeyboardButton("🚗 عادية", callback_data="ride_normal"),
+        types.InlineKeyboardButton("🚙 فاخرة", callback_data="ride_premium")
+    )
+    markup.add(
+        types.InlineKeyboardButton("🚐 عائلية", callback_data="ride_family"),
+        types.InlineKeyboardButton("🚗 اقتصادية", callback_data="ride_economy")
+    )
+    markup.add(
+        types.InlineKeyboardButton("❌ إلغاء", callback_data="cancel_ride")
+    )
+    
+    return markup
+
+def payment_methods_inline():
+    """وسائل الدفع"""
+    markup = types.InlineKeyboardMarkup(row_width=2)
+    
+    markup.add(
+        types.InlineKeyboardButton("💳 بطاقة", callback_data="pay_card"),
+        types.InlineKeyboardButton("📱 محفظة", callback_data="pay_wallet")
+    )
+    markup.add(
+        types.InlineKeyboardButton("💵 نقداً", callback_data="pay_cash"),
+        types.InlineKeyboardButton("❌ إلغاء", callback_data="cancel_payment")
+    )
+    
+    return markup
+
+def confirm_ride_inline():
+    """تأكيد الرحلة"""
+    markup = types.InlineKeyboardMarkup(row_width=2)
+    
+    markup.add(
+        types.InlineKeyboardButton("✅ تأكيد الطلب", callback_data="confirm_ride"),
+        types.InlineKeyboardButton("❌ إلغاء", callback_data="cancel_ride")
+    )
+    
+    return markup
+
+def support_options_inline():
+    """خيارات الدعم"""
+    markup = types.InlineKeyboardMarkup(row_width=1)
+    
+    markup.add(
+        types.InlineKeyboardButton("📞 اتصال فوري", callback_data="call_support"),
+        types.InlineKeyboardButton("💬 محادثة نصية", callback_data="chat_support"),
+        types.InlineKeyboardButton("📧 إرسال شكوى", callback_data="send_complaint"),
+        types.InlineKeyboardButton("❓ أسئلة شائعة", callback_data="faq")
+    )
+    
+    return markup
+
+def quick_actions_inline():
+    """أزرار سريعة"""
+    markup = types.InlineKeyboardMarkup(row_width=3)
+    
+    markup.add(
+        types.InlineKeyboardButton("🚖", callback_data="quick_ride"),
+        types.InlineKeyboardButton("📍", callback_data="quick_location"),
+        types.InlineKeyboardButton("💰", callback_data="quick_balance")
+    )
+    markup.add(
+        types.InlineKeyboardButton("📞", callback_data="quick_support"),
+        types.InlineKeyboardButton("⭐", callback_data="quick_rate"),
+        types.InlineKeyboardButton("⚙️", callback_data="quick_settings")
+    )
+    
+    return markup
+
+def rating_keyboard():
+    """لوحة تقييم"""
+    markup = types.InlineKeyboardMarkup(row_width=5)
+    
+    markup.add(
+        types.InlineKeyboardButton("⭐", callback_data="rate_1"),
+        types.InlineKeyboardButton("⭐⭐", callback_data="rate_2"),
+        types.InlineKeyboardButton("⭐⭐⭐", callback_data="rate_3"),
+        types.InlineKeyboardButton("⭐⭐⭐⭐", callback_data="rate_4"),
+        types.InlineKeyboardButton("⭐⭐⭐⭐⭐", callback_data="rate_5")
+    )
+    
+    return markup
+
+def recharge_amounts_keyboard():
+    """مبالغ شحن الرصيد"""
+    markup = types.InlineKeyboardMarkup(row_width=2)
+    
+    markup.add(
+        types.InlineKeyboardButton("50 ر.س", callback_data="recharge_50"),
+        types.InlineKeyboardButton("100 ر.س", callback_data="recharge_100")
+    )
+    markup.add(
+        types.InlineKeyboardButton("200 ر.س", callback_data="recharge_200"),
+        types.InlineKeyboardButton("500 ر.س", callback_data="recharge_500")
+    )
+    markup.add(
+        types.InlineKeyboardButton("↩️ رجوع", callback_data="back_to_balance")
+    )
+    
+    return markup
+
+def yes_no_keyboard():
+    """أزرار نعم/لا"""
+    markup = types.InlineKeyboardMarkup(row_width=2)
+    
+    markup.add(
+        types.InlineKeyboardButton("✅ نعم", callback_data="yes"),
+        types.InlineKeyboardButton("❌ لا", callback_data="no")
+    )
+    
+    return markup
